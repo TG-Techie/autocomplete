@@ -9,7 +9,7 @@ const completionSpec: Fig.Spec = {
     isOptional: true,
     generators: filepaths({
       extensions: ["sln"],
-      equals: ["project.json", "global.json"],
+      match: /(project\.json)|(global\.json)/g,
     }),
   },
   options: [

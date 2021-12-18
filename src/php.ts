@@ -1,7 +1,5 @@
 // To learn more about Fig's autocomplete standard visit: https://fig.io/docs/concepts/cli-skeleton
 
-import { filepaths } from "./_common/generators";
-
 const completionSpec: Fig.Spec = {
   name: "php",
   description: "Run the PHP interpreter",

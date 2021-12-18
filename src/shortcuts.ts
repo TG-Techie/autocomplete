@@ -121,7 +121,10 @@ const subcommands: Fig.Subcommand[] = [
         description: "The shortcut file to sign",
         args: {
           name: "input",
-          generators: filepaths({ extensions: ["shortcut"] }),
+          generators: filepaths({
+            acceptFolders: true,
+            extensions: ["shortcut"],
+          }),
         },
       },
       {
