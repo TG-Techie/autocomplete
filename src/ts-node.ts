@@ -1,4 +1,5 @@
 import { dependenciesGenerator } from "./npm";
+import { filepaths } from "./_common/generators";
 
 const completionSpec: Fig.Spec = {
   name: "ts-node",
@@ -174,23 +175,11 @@ const completionSpec: Fig.Spec = {
   args: {
     name: "script",
     isScript: true,
-    generators: {
-      template: "filepaths",
-      filterTemplateSuggestions: function (paths) {
-        return paths
-          .filter((file) => {
-            return file.name.match(/.*\.tsx?$/g) || file.name.endsWith("/");
-          })
-          .map((file) => {
-            const isJsFile = file.name.match(/.*\.tsx?$/g);
-
-            return {
-              ...file,
-              priority: isJsFile && 76,
-            };
-          });
-      },
-    },
+    generators: filepaths({
+      match: /.*\.tsx?$/g,
+      acceptFolders: true,
+      priorities: { files: 76 },
+    }),
   },
 };
 export default completionSpec;

@@ -1,12 +1,4 @@
-function isSharedLibrary(name: string): boolean {
-  return (
-    name.endsWith(".dylib") || name.endsWith(".so") || name.endsWith(".dll")
-  );
-}
-
-function isJuliaFile(name: string): boolean {
-  return name.endsWith(".jl");
-}
+import { filepaths } from "./_common/generators";
 
 const completionSpec: Fig.Spec = {
   name: "julia",
@@ -50,21 +42,11 @@ const completionSpec: Fig.Spec = {
       description: "Start up with the given system image file",
       args: {
         name: "system image",
-        generators: {
-          template: "filepaths",
-          filterTemplateSuggestions: function (paths) {
-            return paths
-              .filter((path) => {
-                return isSharedLibrary(path.name) || path.name.endsWith("/");
-              })
-              .map((path) => {
-                return {
-                  ...path,
-                  priority: isSharedLibrary(path.name) && 76,
-                };
-              });
-          },
-        },
+        generators: filepaths({
+          acceptFolders: true,
+          extensions: ["dylib", "so", "dll"],
+          priorities: { files: 76 },
+        }),
       },
     },
     {
@@ -124,21 +106,11 @@ const completionSpec: Fig.Spec = {
       description: "Load given file immediately on all processors",
       args: {
         name: "julia script",
-        generators: {
-          template: "filepaths",
-          filterTemplateSuggestions: function (paths) {
-            return paths
-              .filter((path) => {
-                return isJuliaFile(path.name) || path.name.endsWith("/");
-              })
-              .map((path) => {
-                return {
-                  ...path,
-                  priority: isJuliaFile(path.name) && 76,
-                };
-              });
-          },
-        },
+        generators: filepaths({
+          acceptFolders: true,
+          extensions: ["jl"],
+          priorities: { files: 76 },
+        }),
       },
     },
     // parallel options
@@ -366,21 +338,11 @@ const completionSpec: Fig.Spec = {
     name: "julia script",
     isScript: true,
     isOptional: true,
-    generators: {
-      template: "filepaths",
-      filterTemplateSuggestions: function (paths) {
-        return paths
-          .filter((path) => {
-            return isJuliaFile(path.name) || path.name.endsWith("/");
-          })
-          .map((path) => {
-            return {
-              ...path,
-              priority: isJuliaFile(path.name) && 76,
-            };
-          });
-      },
-    },
+    generators: filepaths({
+      acceptFolders: true,
+      extensions: ["jl"],
+      priorities: { files: 76 },
+    }),
   },
 };
 export default completionSpec;

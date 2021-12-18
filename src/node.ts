@@ -1,26 +1,16 @@
+import { filepaths } from "./_common/generators";
+
 const completionSpec: Fig.Spec = {
   name: "node",
   description: "Run the node interpreter",
   args: {
     name: "node script",
     isScript: true,
-    generators: {
-      template: "filepaths",
-      filterTemplateSuggestions: function (paths) {
-        return paths
-          .filter((file) => {
-            return file.name.match(/.*\.m?js/g) || file.name.endsWith("/");
-          })
-          .map((file) => {
-            const isJsFile = file.name.match(/.*\.m?js/g);
-
-            return {
-              ...file,
-              priority: isJsFile && 76,
-            };
-          });
-      },
-    },
+    generators: filepaths({
+      acceptFolders: true,
+      extensions: ["mjs", "js"],
+      priorities: { files: 76 },
+    }),
   },
   options: [
     {

@@ -1,6 +1,8 @@
 // This file largely follows the same structure (not order) as deno/cli/flags.rs:
 // https://github.com/denoland/deno/blob/main/cli/flags.rs
 
+import { filepaths } from "./_common/generators";
+
 // Fig doesn't automatically insert an '=' where an option's argument requires
 // an equals and the argument isn't optional. That's why you'll see a lot of
 // `insertValue: "--name="` in this spec.
@@ -30,47 +32,18 @@ function generatePreferredFilepaths(init: {
   };
 }
 
-/**
- * Equivalent to the `"filepaths"` template, but removes files that don't
- * end with one of the given endings. Files are given a priority of 75, so
- * they should always appear first.
- */
-function generateFilepathsMatch(init: {
-  match: RegExp;
-  filePriority?: number;
-}): Fig.Generator {
-  const { match, filePriority = 75 } = init;
-  return {
-    template: "filepaths",
-    filterTemplateSuggestions: (paths) => {
-      const out: Fig.Suggestion[] = [];
-      // This is basically a longer form of Array.filter, because the HOF
-      // version became too long to read easily. It's clearer imperatively.
-      for (const path of paths) {
-        if (path.type === "folder") {
-          out.push(path);
-          continue;
-        }
-        if (match.test(path.name)) {
-          path.priority = filePriority;
-          out.push(path);
-        }
-      }
-      return out;
-    },
-  };
-}
+// The Deno core team is looking at adding runnable metadata JSON file, so
+// ".json" will have to be added to this eventually.
+const generateRunnableFiles = filepaths({
+  match: /\.(m?(j|t)sx?)$/i,
+  priorities: { files: 75 },
+  acceptFolders: true,
+});
 
 type VersionsJSON = {
   latest: string;
   versions: string[];
 };
-
-// The Deno core team is looking at adding runnable metadata JSON file, so
-// ".json" will have to be added to this eventually.
-const generateRunnableFiles = generateFilepathsMatch({
-  match: /\.(m?(j|t)sx?)$/i,
-});
 
 type DenoLintRulesJSON = {
   code: string;
@@ -416,9 +389,10 @@ const denoTest: Fig.Subcommand = {
     description: "The paths of tests to run",
     isOptional: true,
     isVariadic: true,
-    generators: generateFilepathsMatch({
-      // Any files with a test suffix should be suggested
+    generators: filepaths({
       match: /(\.|_)?test\.(m?(j|t)sx?)$/,
+      priorities: { files: 75 },
+      acceptFolders: true,
     }),
   },
   options: [
@@ -511,8 +485,10 @@ const denoFmt: Fig.Subcommand = {
     description: "Files to format",
     isOptional: true,
     isVariadic: true,
-    generators: generateFilepathsMatch({
+    generators: filepaths({
       match: /\.(mjs|jsx?|tsx?|jsonc?|md)$/i,
+      priorities: { files: 75 },
+      acceptFolders: true,
     }),
   },
   options: [
