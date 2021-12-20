@@ -1,6 +1,6 @@
 /* eslint-disable */
 interface FilepathsOptions {
-  /** Show suggestions with any of these extensions */
+  /** Show suggestions with any of these extensions. Do not include the leading dot. */
   extensions?: string[];
   /** Show suggestions that include this string */
   includes?: string;
@@ -60,8 +60,18 @@ export function filepaths(options: FilepathsOptions): Fig.Generator {
         if (equalsSet.has(name)) return true;
         if (matches && matches.test(name)) return true;
         if (includes && name.includes(includes)) return true;
-        // TODO: multiple dots
-        return extensionsSet.has(name.substring(name.lastIndexOf(".") + 1));
+        // handle extensions
+        const [_, ...extensions] = name.split(".");
+        if (extensions.length >= 1) {
+          let stackedExtensions = "";
+          for (let i = 0; i < extensions.length; i++) {
+            stackedExtensions = extensions[i] + stackedExtensions;
+            if (extensionsSet.has(stackedExtensions)) {
+              return true;
+            }
+          }
+        }
+        return false;
       });
       if (!editFileSuggestions && !editFolderSuggestions) return filtered;
 
