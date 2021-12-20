@@ -16,9 +16,16 @@ interface FilepathsOptions {
 }
 
 /**
- * Syntactic sugar over `filepaths + filterTemplateSugestions` template
- * @param param0
- * @returns
+ * Sugar over using the `filepaths` template with `filterTemplateSuggestions`. If any of the
+ * conditions match, the suggestion will be accepted.
+ *
+ * Basic filepath filters can be replaced with this generator.
+ * 
+ * @example
+ * ```
+ * // inside a `Fig.Arg`...
+ * generators: filepaths({ extensions: ["mjs", "js", "json"] });
+ * ```
  */
 export function filepaths(options: FilepathsOptions): Fig.Generator {
   const {
