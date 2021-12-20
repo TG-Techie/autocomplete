@@ -176,8 +176,8 @@ const completionSpec: Fig.Spec = {
     name: "script",
     isScript: true,
     generators: filepaths({
-      match: /.*\.tsx?$/g,
-      acceptFolders: true,
+      matches: /.*\.tsx?$/g,
+      suggestFolders: "always",
       priorities: { files: 76 },
     }),
   },

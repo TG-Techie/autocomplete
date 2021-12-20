@@ -20,7 +20,7 @@ const completionSpec: Fig.Spec = {
     name: "python script",
     isScript: true,
     generators: filepaths({
-      acceptFolders: true,
+      suggestFolders: "always",
       extensions: ["py"],
       priorities: { files: 76 },
     }),

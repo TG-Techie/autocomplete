@@ -9,7 +9,7 @@ const completionSpec: Fig.Spec = {
       description: ".exs file",
       generators: filepaths({
         extensions: ["exs"],
-        acceptFolders: true,
+        suggestFolders: "always",
         priorities: { files: 76 },
       }),
     },

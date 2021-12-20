@@ -1,7 +1,7 @@
 import { filepaths } from "./_common/generators";
 
 const generateProjects: Fig.Generator = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   equals: [".sublime-project", ".sublime-workspace"],
   priorities: { files: 76 },
 });

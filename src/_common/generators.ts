@@ -7,9 +7,15 @@ interface FilepathsOptions {
   /** Show suggestions where the name exactly matches one of these strings */
   equals?: string | string[];
   /** Show suggestions where the name matches this expression */
-  match?: RegExp;
-  /** Show folders? */
-  acceptFolders?: boolean;
+  matches?: RegExp;
+  /**
+   * Defines how folders are suggested.
+   *
+   * - **Default:** `filter` will treat folders like files, filtering based on the name.
+   * - `always` will always suggest folders.
+   * - `never` will never suggest folders.
+   */
+  suggestFolders?: "filter" | "always" | "never";
   /**
    * Set the priorities of the kinds of suggestions. If unset,
    * the default priority for that suggestion is used.
@@ -37,7 +43,7 @@ interface FilepathsOptions {
  * conditions match, the suggestion will be accepted.
  *
  * Basic filepath filters can be replaced with this generator.
- * 
+ *
  * @example
  * ```
  * // inside a `Fig.Arg`...
@@ -49,8 +55,8 @@ export function filepaths(options: FilepathsOptions): Fig.Generator {
     extensions = [],
     includes,
     equals = [],
-    match,
-    acceptFolders,
+    matches,
+    suggestFolders = "filter",
     priorities,
     icons,
   } = options;
@@ -60,14 +66,11 @@ export function filepaths(options: FilepathsOptions): Fig.Generator {
     template: "filepaths",
     filterTemplateSuggestions: (suggestions) => {
       const filtered = suggestions.filter(({ name, type }) => {
-        if (
-          typeof acceptFolders !== undefined &&
-          acceptFolders === (type === "folder")
-        ) {
-          return true;
+        if (suggestFolders !== "filter" && type === "folder") {
+          return suggestFolders === "always";
         }
         if (equalsSet.has(name)) return true;
-        if (match && match.test(name)) return true;
+        if (matches && matches.test(name)) return true;
         if (includes && name.includes(includes)) return true;
         // TODO: multiple dots
         return extensionsSet.has(name.substring(name.lastIndexOf(".") + 1));

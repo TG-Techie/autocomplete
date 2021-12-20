@@ -27,7 +27,7 @@ const instanceNameGenerator = (
 });
 
 const yamlFilepathsGenerator = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   extensions: ["yaml", "yml"],
   priorities: { files: PRIORITY_TOP_THRESHOLD },
 });

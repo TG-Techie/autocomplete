@@ -721,7 +721,7 @@ const completionSpec: Fig.Spec = {
     name: "tsc script",
     isScript: true,
     generators: filepaths({
-      acceptFolders: true,
+      suggestFolders: "always",
       extensions: ["ts"],
       priorities: { files: 76, folder: 70 },
     }),

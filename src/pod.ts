@@ -3,7 +3,7 @@ import { filepaths } from "./_common/generators";
 const POD_ICON =
   "https://raw.githubusercontent.com/vscode-icons/vscode-icons/master/icons/file_type_ruby.svg";
 const podSpecAndFoldersGenerator = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   extensions: ["podspec"],
   icons: { files: POD_ICON },
 });

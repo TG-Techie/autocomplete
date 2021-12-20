@@ -5,18 +5,18 @@ const compileFiles = filepaths({
 });
 
 const rPackages = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   extensions: ["tar", "tar.gz", "tzr.bz2", "tar.xz", "tgz"],
 });
 
 const RDocGenerator = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   extensions: ["Rd"],
   priorities: { files: 76 },
 });
 
 const RFileGenerator = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   extensions: ["R"],
   priorities: { files: 76 },
 });

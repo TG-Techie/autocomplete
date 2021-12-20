@@ -18,7 +18,7 @@ const flutterGenerators: Record<string, Fig.Generator> = {
         }));
     },
   },
-  dartFiles: filepaths({ acceptFolders: true, extensions: ["dart"] }),
+  dartFiles: filepaths({ suggestFolders: "always", extensions: ["dart"] }),
 };
 
 const help = {

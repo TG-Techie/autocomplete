@@ -576,7 +576,7 @@ const defaultCommands: Fig.Subcommand[] = [
     args: {
       name: "files or directories",
       generators: filepaths({
-        acceptFolders: true,
+        suggestFolders: "always",
         extensions: ["rb"],
         icons: { files: RB_ICON },
       }),

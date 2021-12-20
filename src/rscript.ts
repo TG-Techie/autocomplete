@@ -80,7 +80,7 @@ const completionSpec: Fig.Spec = {
       description: "R script to run",
       isScript: true,
       generators: filepaths({
-        acceptFolders: true,
+        suggestFolders: "always",
         extensions: ["R"],
         priorities: { files: 76 },
       }),

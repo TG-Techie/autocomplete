@@ -122,7 +122,7 @@ const subcommands: Fig.Subcommand[] = [
         args: {
           name: "input",
           generators: filepaths({
-            acceptFolders: true,
+            suggestFolders: "always",
             extensions: ["shortcut"],
           }),
         },

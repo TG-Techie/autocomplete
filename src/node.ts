@@ -7,7 +7,7 @@ const completionSpec: Fig.Spec = {
     name: "node script",
     isScript: true,
     generators: filepaths({
-      acceptFolders: true,
+      suggestFolders: "always",
       extensions: ["mjs", "js"],
       priorities: { files: 76 },
     }),

@@ -43,7 +43,7 @@ const completionSpec: Fig.Spec = {
       args: {
         name: "system image",
         generators: filepaths({
-          acceptFolders: true,
+          suggestFolders: "always",
           extensions: ["dylib", "so", "dll"],
           priorities: { files: 76 },
         }),
@@ -107,7 +107,7 @@ const completionSpec: Fig.Spec = {
       args: {
         name: "julia script",
         generators: filepaths({
-          acceptFolders: true,
+          suggestFolders: "always",
           extensions: ["jl"],
           priorities: { files: 76 },
         }),
@@ -339,7 +339,7 @@ const completionSpec: Fig.Spec = {
     isScript: true,
     isOptional: true,
     generators: filepaths({
-      acceptFolders: true,
+      suggestFolders: "always",
       extensions: ["jl"],
       priorities: { files: 76 },
     }),

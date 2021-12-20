@@ -9,7 +9,7 @@ const APPLE_ICON =
 const ANDROID_ICON = "https://www.android.com/static/images/fav/favicon.ico";
 
 const getJsFilesAndFolders = filepaths({
-  acceptFolders: true,
+  suggestFolders: "always",
   extensions: ["js"],
   icons: { files: JS_ICON },
 });

@@ -35,9 +35,9 @@ function generatePreferredFilepaths(init: {
 // The Deno core team is looking at adding runnable metadata JSON file, so
 // ".json" will have to be added to this eventually.
 const generateRunnableFiles = filepaths({
-  match: /\.(m?(j|t)sx?)$/i,
+  matches: /\.(m?(j|t)sx?)$/i,
   priorities: { files: 75 },
-  acceptFolders: true,
+  suggestFolders: "always",
 });
 
 type VersionsJSON = {
@@ -390,9 +390,9 @@ const denoTest: Fig.Subcommand = {
     isOptional: true,
     isVariadic: true,
     generators: filepaths({
-      match: /(\.|_)?test\.(m?(j|t)sx?)$/,
+      matches: /(\.|_)?test\.(m?(j|t)sx?)$/,
       priorities: { files: 75 },
-      acceptFolders: true,
+      suggestFolders: "always",
     }),
   },
   options: [
@@ -486,9 +486,9 @@ const denoFmt: Fig.Subcommand = {
     isOptional: true,
     isVariadic: true,
     generators: filepaths({
-      match: /\.(mjs|jsx?|tsx?|jsonc?|md)$/i,
+      matches: /\.(mjs|jsx?|tsx?|jsonc?|md)$/i,
       priorities: { files: 75 },
-      acceptFolders: true,
+      suggestFolders: "always",
     }),
   },
   options: [
