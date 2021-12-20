@@ -5,7 +5,7 @@ const POD_ICON =
 const podSpecAndFoldersGenerator = filepaths({
   suggestFolders: "always",
   extensions: ["podspec"],
-  icons: { files: POD_ICON },
+  editFileSuggestions: { icon: POD_ICON },
 });
 
 const completionSpec: Fig.Spec = {

@@ -578,7 +578,7 @@ const defaultCommands: Fig.Subcommand[] = [
       generators: filepaths({
         suggestFolders: "always",
         extensions: ["rb"],
-        icons: { files: RB_ICON },
+        editFileSuggestions: { icon: RB_ICON },
       }),
       isOptional: true,
     },

@@ -36,7 +36,7 @@ function generatePreferredFilepaths(init: {
 // ".json" will have to be added to this eventually.
 const generateRunnableFiles = filepaths({
   matches: /\.(m?(j|t)sx?)$/i,
-  priorities: { files: 75 },
+  editFileSuggestions: { priority: 75 },
   suggestFolders: "always",
 });
 
@@ -391,7 +391,7 @@ const denoTest: Fig.Subcommand = {
     isVariadic: true,
     generators: filepaths({
       matches: /(\.|_)?test\.(m?(j|t)sx?)$/,
-      priorities: { files: 75 },
+      editFileSuggestions: { priority: 75 },
       suggestFolders: "always",
     }),
   },
@@ -487,7 +487,7 @@ const denoFmt: Fig.Subcommand = {
     isVariadic: true,
     generators: filepaths({
       matches: /\.(mjs|jsx?|tsx?|jsonc?|md)$/i,
-      priorities: { files: 75 },
+      editFileSuggestions: { priority: 75 },
       suggestFolders: "always",
     }),
   },

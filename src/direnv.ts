@@ -25,7 +25,7 @@ const envrcFilepathsGenerator = (
 const dotenvFilepathsGenerator = filepaths({
   suggestFolders: "always",
   matches: /\.env(?!rc)/g,
-  priorities: { files: PRIORITY_TOP_THRESHOLD },
+  editFileSuggestions: { priority: PRIORITY_TOP_THRESHOLD },
 });
 
 /*

@@ -45,7 +45,7 @@ const completionSpec: Fig.Spec = {
         generators: filepaths({
           suggestFolders: "always",
           extensions: ["dylib", "so", "dll"],
-          priorities: { files: 76 },
+          editFileSuggestions: { priority: 76 },
         }),
       },
     },
@@ -109,7 +109,7 @@ const completionSpec: Fig.Spec = {
         generators: filepaths({
           suggestFolders: "always",
           extensions: ["jl"],
-          priorities: { files: 76 },
+          editFileSuggestions: { priority: 76 },
         }),
       },
     },
@@ -341,7 +341,7 @@ const completionSpec: Fig.Spec = {
     generators: filepaths({
       suggestFolders: "always",
       extensions: ["jl"],
-      priorities: { files: 76 },
+      editFileSuggestions: { priority: 76 },
     }),
   },
 };

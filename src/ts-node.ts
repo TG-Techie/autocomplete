@@ -178,7 +178,7 @@ const completionSpec: Fig.Spec = {
     generators: filepaths({
       matches: /.*\.tsx?$/g,
       suggestFolders: "always",
-      priorities: { files: 76 },
+      editFileSuggestions: { priority: 76 },
     }),
   },
 };

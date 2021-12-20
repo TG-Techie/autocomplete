@@ -3,7 +3,8 @@ import { filepaths } from "./_common/generators";
 const generateProjects: Fig.Generator = filepaths({
   suggestFolders: "always",
   equals: [".sublime-project", ".sublime-workspace"],
-  priorities: { files: 76 },
+
+  editFileSuggestions: { priority: 76 },
 });
 
 const completionSpec: Fig.Spec = {

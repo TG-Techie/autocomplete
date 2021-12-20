@@ -17,25 +17,13 @@ interface FilepathsOptions {
    */
   suggestFolders?: "filter" | "always" | "never";
   /**
-   * Set the priorities of the kinds of suggestions. If unset,
-   * the default priority for that suggestion is used.
+   * Set properties of suggestions of type "file".
    */
-  priorities?: {
-    /** Folder suggestions will have this priority */
-    folder?: number;
-    /** File suggestions will have this priority */
-    files?: number;
-  };
+  editFileSuggestions?: Omit<Fig.Suggestion, "name" | "type">;
   /**
-   * Set the icons for the different kinds of suggestions.
-   * If unset, the default icon for that suggestion is used.
+   * Set properties of suggestions of type "folder".
    */
-  icons?: {
-    /** The icon for folders */
-    folder?: string;
-    /** The icon for files */
-    files?: string;
-  };
+  editFolderSuggestions?: Omit<Fig.Suggestion, "name" | "type">;
 }
 
 /**
@@ -57,8 +45,8 @@ export function filepaths(options: FilepathsOptions): Fig.Generator {
     equals = [],
     matches,
     suggestFolders = "filter",
-    priorities,
-    icons,
+    editFileSuggestions,
+    editFolderSuggestions,
   } = options;
   const extensionsSet = new Set(extensions);
   const equalsSet = new Set(equals);
@@ -75,16 +63,14 @@ export function filepaths(options: FilepathsOptions): Fig.Generator {
         // TODO: multiple dots
         return extensionsSet.has(name.substring(name.lastIndexOf(".") + 1));
       });
-      if (!priorities && !icons) return filtered;
+      if (!editFileSuggestions && !editFolderSuggestions) return filtered;
 
       return filtered.map((suggestion) => {
         return {
           ...suggestion,
-          priority:
-            suggestion.type === "folder"
-              ? priorities?.folder
-              : priorities?.files,
-          icon: suggestion.type === "folder" ? icons?.folder : icons?.files,
+          ...((suggestion.type === "file"
+            ? editFileSuggestions
+            : editFolderSuggestions) || {}),
         };
       });
     },

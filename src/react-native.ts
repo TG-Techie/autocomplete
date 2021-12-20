@@ -11,7 +11,7 @@ const ANDROID_ICON = "https://www.android.com/static/images/fav/favicon.ico";
 const getJsFilesAndFolders = filepaths({
   suggestFolders: "always",
   extensions: ["js"],
-  icons: { files: JS_ICON },
+  editFileSuggestions: { icon: JS_ICON },
 });
 
 const workerGenerator = {

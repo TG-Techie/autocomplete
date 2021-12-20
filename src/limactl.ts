@@ -29,7 +29,7 @@ const instanceNameGenerator = (
 const yamlFilepathsGenerator = filepaths({
   suggestFolders: "always",
   extensions: ["yaml", "yml"],
-  priorities: { files: PRIORITY_TOP_THRESHOLD },
+  editFileSuggestions: { priority: PRIORITY_TOP_THRESHOLD },
 });
 
 const completionSpec: Fig.Spec = {

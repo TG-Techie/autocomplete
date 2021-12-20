@@ -12,13 +12,13 @@ const rPackages = filepaths({
 const RDocGenerator = filepaths({
   suggestFolders: "always",
   extensions: ["Rd"],
-  priorities: { files: 76 },
+  editFileSuggestions: { priority: 76 },
 });
 
 const RFileGenerator = filepaths({
   suggestFolders: "always",
   extensions: ["R"],
-  priorities: { files: 76 },
+  editFileSuggestions: { priority: 76 },
 });
 
 const RLibGenerator: Fig.Generator = {

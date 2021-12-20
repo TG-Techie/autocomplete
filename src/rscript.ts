@@ -82,7 +82,7 @@ const completionSpec: Fig.Spec = {
       generators: filepaths({
         suggestFolders: "always",
         extensions: ["R"],
-        priorities: { files: 76 },
+        editFileSuggestions: { priority: 76 },
       }),
     },
     {
