@@ -1,16 +1,33 @@
 /* eslint-disable */
 interface FilepathsOptions {
+  /** Show suggestions with any of these extensions */
   extensions?: string[];
+  /** Show suggestions that include this string */
   includes?: string;
+  /** Show suggestions where the name exactly matches one of these strings */
   equals?: string | string[];
+  /** Show suggestions where the name matches this expression */
   match?: RegExp;
+  /** Show folders? */
   acceptFolders?: boolean;
+  /**
+   * Set the priorities of the kinds of suggestions. If unset,
+   * the default priority for that suggestion is used.
+   */
   priorities?: {
+    /** Folder suggestions will have this priority */
     folder?: number;
+    /** File suggestions will have this priority */
     files?: number;
   };
+  /**
+   * Set the icons for the different kinds of suggestions.
+   * If unset, the default icon for that suggestion is used.
+   */
   icons?: {
+    /** The icon for folders */
     folder?: string;
+    /** The icon for files */
     files?: string;
   };
 }
