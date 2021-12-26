@@ -307,7 +307,7 @@ const completionSpec: Fig.Spec = {
     },
     {
       name: "remote",
-      description: "Merge the divergent changes of one branch onto another",
+      description: "List, create, edit or delete remotes",
       args: {},
       options: [
         {
