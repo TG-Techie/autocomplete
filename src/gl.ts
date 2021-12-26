@@ -1,3 +1,5 @@
+// create a template for gitless branch format
+
 const completionSpec: Fig.Spec = {
   name: "gl",
   description: "Gitless: a simple version control system",
