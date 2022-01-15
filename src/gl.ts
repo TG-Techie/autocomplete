@@ -1,5 +1,55 @@
 // create a template for gitless branch format
 
+// a generator for gitless branch format to autsuggest local branches and remote repo names
+const localBranches: Fig.Generator = {
+  script: "gl branch",
+  postProcess: (output) => {
+    if (output.startsWith("fatal:")) {
+      return [];
+    }
+
+    return output
+      .split("\n")
+      .filter(
+        (branch) =>
+          branch.trim().length > 0 &&
+          !(branch.trim().startsWith("➜") || branch === "List of branches:")
+      )
+      .map((branch) => {
+        return {
+          name: branch.replace("*", "").split("(")[0].trim(),
+          description: "Branch",
+        };
+      });
+  },
+};
+
+const localRemotes = (suffix: string): Fig.Generator => {
+  return {
+    script: "gl remote",
+    postProcess: (output) => {
+      if (output.startsWith("fatal:")) {
+        return [];
+      }
+
+      return output
+        .split("\n")
+        .filter(
+          (remote) =>
+            remote.trim().length > 0 &&
+            !(remote.trim().startsWith("➜") || remote === "List of remotes:")
+        )
+        .map((remote) => {
+          return {
+            name: remote.split("(")[0].trim() + suffix,
+            description: "Remote",
+          };
+        });
+    },
+  };
+};
+
+// the core completion spec
 const completionSpec: Fig.Spec = {
   name: "gl",
   description: "Gitless: a simple version control system",
@@ -31,31 +81,49 @@ const completionSpec: Fig.Spec = {
           name: ["-v", "--verbose"],
           description: "Be verbose, will output the head of each branch",
         },
+      ],
+      subcommands: [
         {
           name: ["-c", "--create branch"],
           description: "Create branch(es)",
           args: [
-            { name: "branch" },
             {
-              name: "branches",
+              name: "branch",
+              isOptional: false,
+            },
+            {
+              name: "branch",
               isVariadic: true,
               isOptional: true,
             },
           ],
-        },
-        {
-          name: ["-dp", "--divergent-point"],
-          description:
-            "The commit from where to 'branch out' (only relevant if a new branch is created; defaults to HEAD)",
-          args: { name: "DP" },
+          options: [
+            {
+              name: "",
+              args: { name: "branch" },
+            },
+            {
+              name: ["-dp", "--divergent-point"],
+              description:
+                "The commit from where to 'branch out' (only relevant if a new branch is created; defaults to HEAD)",
+              args: {
+                name: "DP",
+                generators: [localBranches, localRemotes("/")],
+              },
+            },
+          ],
         },
         {
           name: ["-d", "--delete"],
           description: "Delete branch(es)",
           args: [
-            { name: "branch" },
+            {
+              name: "branch",
+              generators: localBranches,
+            },
             {
               name: "branches",
+              generators: localBranches,
               isVariadic: true,
               isOptional: true,
             },
@@ -71,7 +139,11 @@ const completionSpec: Fig.Spec = {
           // a bit too much as it could make a network call for each remote
           name: ["-su", "--set-upstream branch"],
           description: "Set the upstream branch of the current branch",
-          args: { name: "branch" },
+          args: {
+            name: "branch",
+            isOptional: false,
+            generators: localRemotes("/"),
+          },
         },
         {
           name: ["-uu", "--unset-upstream"],
@@ -86,6 +158,7 @@ const completionSpec: Fig.Spec = {
       args: {
         name: "branch",
         description: "The branch to switch to",
+        generators: localBranches,
       },
       options: [
         {
@@ -236,6 +309,7 @@ const completionSpec: Fig.Spec = {
       args: {
         name: "src",
         description: "The source branch to read changes from",
+        generators: [localRemotes("/"), localBranches],
       },
       options: [
         {
@@ -321,6 +395,7 @@ const completionSpec: Fig.Spec = {
             {
               name: "remote-name",
               description: "The name of the new remote",
+              generators: localRemotes(""),
             },
             {
               name: "remote-url",
@@ -335,6 +410,7 @@ const completionSpec: Fig.Spec = {
             name: "remote",
             isVariadic: true,
             description: "The name of the remote(s) to delete",
+            generators: localRemotes(""),
           },
         },
       ],
