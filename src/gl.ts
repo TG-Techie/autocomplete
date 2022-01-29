@@ -92,7 +92,7 @@ const completionSpec: Fig.Spec = {
               isOptional: false,
             },
             {
-              name: "branch",
+              name: "branches",
               isVariadic: true,
               isOptional: true,
             },
