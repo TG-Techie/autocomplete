@@ -4021,6 +4021,7 @@ const daemonServices: Fig.Suggestion[] = [
   },
 ];
 
+export
 const completionSpec: Fig.Spec = {
   name: "git",
   description: "The stupid content tracker",
